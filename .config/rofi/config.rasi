@@ -1,0 +1,34 @@
+configuration {
+ font: "SF Pro";
+ show-icons: true;
+ }
+
+//@theme "/usr/share/rofi/themes/dmenu.rasi"
+
+//@theme "/usr/share/rofi/themes/sidebar.rasi"
+
+//@theme "/usr/share/rofi/themes/Arc.rasi"
+
+//@theme "/usr/share/rofi/themes/Adapta-Nokto.rasi"
+
+//@theme "/usr/share/rofi/themes/purple.rasi"
+
+//@theme "/usr/share/rofi/themes/Monokai.rasi"
+
+//@theme "/usr/share/rofi/themes/dmenu.rasi"
+
+//@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
+
+//@theme "/usr/share/rofi/themes/android_notification.rasi"
+
+//@theme "/usr/share/rofi/themes/android_notification.rasi"
+
+//@theme "/usr/share/rofi/themes/solarized_alternate.rasi"
+
+//@theme "/usr/share/rofi/themes/android_notification.rasi"
+
+//@theme "/usr/share/rofi/themes/solarized_alternate.rasi"
+
+//@theme "/usr/share/rofi/themes/android_notification.rasi"
+
+@theme "/usr/share/rofi/themes/solarized_alternate.rasi"

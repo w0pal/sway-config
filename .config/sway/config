@@ -1,0 +1,273 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+    set $mod Mod4
+# Home row direction keys, like vim
+    set $left h
+    set $down j
+    set $up k
+    set $right l
+
+# Setting up Fn keys
+    set $brightnessup brightnessctl s +10
+    set $brightnessdown brightnessctl s 10-
+    set $volup pactl set-sink-volume @DEFAULT_SINK@ +5%
+    set $voldown pactl set-sink-volume @DEFAULT_SINK@ -5%
+    set $volmute pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Your preferred terminal emulator
+    set $term kitty
+
+# Your preferred application launcher
+    set $menu rofi -show drun
+
+# Clipboard 
+#    bindsym $mod+v exec rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
+    exec --no-startup-id greenclip daemon>/dev/null
+    bindsym $mod+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+    output * bg /home/naufal/Pictures/wallpaper/wave-dark-nord1.png fill
+#
+# Example configuration:
+# Monitors
+    output HDMI-A-1 mode 1366x768 position 244,0 
+    output eDP-1 mode 1920x1200 position 0,768
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+# Sleep (before applying, edit the /etc/systemd/login.conf and change HandleLidSwitch=lock_then_suspend)
+   set $laptop eDP-1
+   bindswitch --reload --locked lid:on output $laptop disable
+   bindswitch --reload --locked lid:off output $laptop enable
+
+# Lock Screen
+    exec LT="$lock_timeout" ST="$screen_timeout" LT=${LT:-300} ST=${ST:-60} && \
+    swayidle -w \
+        timeout $LT 'swaylock -f' \
+        timeout $((LT + ST)) 'swaymsg "output * power off"' \
+                      resume 'swaymsg "output * power on"'  \
+        timeout $ST 'pgrep -xu "$USER" swaylock >/dev/null && swaymsg "output * power off"' \
+             resume 'pgrep -xu "$USER" swaylock >/dev/null && swaymsg "output * power on"'  \
+        before-sleep 'swaylock -f' \
+        lock 'swaylock -f' \
+        unlock 'pkill -xu "$USER" -SIGUSR1 swaylock'
+
+### Input configuration
+#
+# Example configuration:
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+   input "type:touchpad" {
+       dwt enabled
+       tap enabled
+       natural_scroll enabled
+       middle_emulation enabled
+       accel_profile "adaptive" # disable mouse acceleration (enabled by default; to set it manually, use "adaptive" instead of "flat")
+       pointer_accel 0.1 # set mouse sensitivity (between -1 and 1)
+       scroll_factor 0.5 # scroll speed
+   }
+   
+# Read `man 5 sway-input` for more information about this section.
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+Return exec $term
+
+    # Kill focused window
+    bindsym $mod+q kill
+
+    # Start your launcher
+    bindsym $mod+d exec $menu
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+   
+    # Laptop Keyboard Shortcut
+    bindsym --locked XF86MonBrightnessUp exec $brightnessup
+    bindsym --locked XF86MonBrightnessDown exec $brightnessdown
+    bindsym --locked XF86AudioRaiseVolume exec $volup
+    bindsym --locked XF86AudioLowerVolume exec $voldown
+    bindsym --locked XF86AudioMute exec $volmute
+    
+    # Rofi Power Menu 
+    bindsym $mod+XF86PowerOff exec rofi -show p -modi p:rofi-power-menu
+    
+    # Launch apps
+    bindsym $mod+t exec thunar # file explorer
+    bindsym $mod+b exec chromium # browser
+
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus righ
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+
+# Default Floating Apps
+    for_window [app_id="eog"] floating enable
+    for_window [app_id="org.gnome.Calculator"] floating enable
+    for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
+    for_window [app_id="qt5ct"] floating enable
+    for_window [app_id="qt6ct"] floating enable
+    for_window [app_id="nwg-look"] floating enable
+    for_window [app_id="cheese"] floating enable
+    for_window [app_id="minecraft_launcher"] floating enable
+    for_window [app_id="xfce4-about"] floating enable
+    for_window [app_id="wdisplays"] floating enable
+    for_window [app_id="tlp-ui"] floating enable
+    for_window [app_id="gnome-disks"] floating enable
+    for_window [app_id="org.qbittorrent.qBittorrent"] floating enable
+    for_window [app_id="blueman-manager"] floating enable
+    for_window [app_id="fdm"] floating enable
+
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    # bindsym $mod+n splith
+    # bindsym $mod+m splitv
+
+    # Switch the current container between different layout styles
+    #bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+
+    # Autotiling
+    exec_always --no-startup-id autotiling
+    exec_always autotiling -w 1 3 5 7 9
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    #bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    #bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+    mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    }
+
+# Resize
+    bindsym $mod+r mode "resize"
+
+# screenshots
+    # bindsym Print exec grim
+    # bindsym $mod+Print exec grim -g "$(slurp)"
+    bindsym $mod+Print exec sway-screenshot -m window # Screenshot a window
+    bindsym Print exec sway-screenshot -m output # Screenshot a monitor
+    bindsym $mod+Shift+Print exec sway-screenshot -m region # Screenshot a region
+
+# OBS Fix
+    exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
+# Hide TItle Borders
+    default_border pixel 2
+    default_floating_border pixel 2
+
+# Border Gaps
+    gaps inner 10
+
+# Border color
+    client.focused              #1ad6d3 #1ad6d3 #1ad6d3 #1ad6d3
+
+# Polkit
+    exec_always lxsession
+
+# Notifications
+   exec_always dunst
+
+#
+# Status Bar:
+    bar {
+        swaybar_command waybar
+    }
+# Read `man 5 sway-bar` for more information about this section.
+
+include /etc/sway/config.d/*
