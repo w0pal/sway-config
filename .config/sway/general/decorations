@@ -1,0 +1,18 @@
+# Hide Title Borders
+    default_border pixel 2
+    default_floating_border pixel 2
+
+# Border Gaps
+    gaps inner 0
+
+# Border color
+    client.focused              #1ad6d3 #1ad6d3 #1ad6d3 #1ad6d3
+
+# Status Bar
+bar {
+    swaybar_command waybar
+}
+
+
+# Prevent screen duplicate waybar
+#exec_always --no-startup-id bash -c 'pgrep waybar || waybar'

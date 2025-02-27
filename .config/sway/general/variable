@@ -1,0 +1,28 @@
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+    set $mod Mod4
+# Home row direction keys, like vim
+    set $left h
+    set $down j
+    set $up k
+    set $right l
+
+# Setting up Fn keys
+    set $explorer thunar
+    set $browser firefox
+    set $brightnessup brightnessctl s +10
+    set $brightnessdown brightnessctl s 10-
+    set $volup pactl set-sink-volume @DEFAULT_SINK@ +5%
+    set $voldown pactl set-sink-volume @DEFAULT_SINK@ -5%
+    set $volmute pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+
+# Your preferred terminal emulator
+    set $term kitty
+
+# Your preferred application launcher
+    set $menu rofi -show drun
+    
+# Set the laptop display
+    set $laptop eDP-1
