@@ -1,13 +1,13 @@
 # Hide Title Borders
-    default_border pixel 2
-    default_floating_border pixel 2
+    default_border pixel 4
+    default_floating_border pixel 1
 
 # Border Gaps
     gaps inner 0
 
 # Border color
-    client.focused              #1ad6d3 #1ad6d3 #1ad6d3 #1ad6d3
-
+    #client.focused              #1ad6d3 #1ad6d3 #1ad6d3 #1ad6d3
+    client.focused              #ff0909 #ff0909 #ff0909 #ff0909
 # Status Bar
 bar {
     swaybar_command waybar

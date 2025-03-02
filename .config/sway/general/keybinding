@@ -3,7 +3,7 @@
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+t exec $term
+    bindsym $mod+Return exec $term
 
     # Kill focused window
     bindsym $mod+q kill
@@ -37,6 +37,7 @@
     # Launch apps
     bindsym $mod+n exec $explorer # file explorer
     bindsym $mod+b exec $browser # browser
+    bindsym $mod+Ctrl+b exec $browser_GPT
 
 # Moving around:
 #
@@ -103,6 +104,8 @@
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
+
+    bindsym $mod+o exec $wallpaper
 
 # Scratchpad:
 #

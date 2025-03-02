@@ -4,4 +4,3 @@
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
  exec_always --no-startup-id swaymsg output "*" bg ~/.config/sway/cache.jpg fill
-bindsym $mod+p exec ~/.config/sway/script/wallpaper_chooser.sh
