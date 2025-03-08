@@ -77,8 +77,6 @@ cp -r .config/qt5ct/* ~/.config/qt5ct/
 mkdir -p ~/.config/qt6ct
 cp -r .config/qt6ct/* ~/.config/qt6ct/
 
-# Systemd configuration
-sudo cp etc/systemd/logind.conf /etc/systemd/
 
 # /etc/ configuration
 sudo cp etc/ly/config.ini /etc/ly/
