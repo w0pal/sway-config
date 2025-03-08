@@ -1,91 +1,82 @@
-# Sway Configuration
+## Dependencies
 
-This configuration is used to manage the Sway environment with various useful settings and scripts.
+- Sway
+- Waybar
+- Dunst
+- Rofi/rofi-wayland
+- Kitty
+- Fish (optional)
+- zsh
+- Fastfetch
+- Greenclip
+- LXPolkit
+- nm-applet
+- blueman-applet
+- autotiling
+- feh
+- grim
+- slurp
+- jq
+- brightnessctl
+- pavucontrol
 
-## Main Configuration
+## Installations
 
-### Sway
+```sh
+# Sway configuration
+mkdir -p ~/.config/sway
+cp -r .config/sway/* ~/.config/sway/
 
-- **Main Config**: [config](.config/sway/config)
-- **Variables**: [variable](.config/sway/variable)
-- **Keybinding**: [keybinding](.config/sway/keybinding)
-- **Autostart**: [autostart](.config/sway/autostart)
-- **Decorations**: [decorations](.config/sway/decorations)
-- **Floating Apps**: [float_apps](.config/sway/float_apps)
-- **Clipboard**: [clipboard](.config/sway/clipboard)
-- **Miscellaneous**: [misc](.config/sway/misc)
-- **Output**: [outputs](.config/sway/outputs)
-- **Workspaces**: [workspaces](.config/sway/workspaces)
+# Waybar configuration
+mkdir -p ~/.config/waybar
+cp -r .config/waybar/* ~/.config/waybar/
 
-### Waybar
+# Dunst configuration
+mkdir -p ~/.config/dunst
+cp .config/dunst/dunstrc ~/.config/dunst/
 
-- **Configuration**: [config.jsonc](.config/waybar/config.jsonc)
-- **Style**: [style.css](.config/waybar/style.css)
-- **Colors**: [color.css](.config/waybar/color.css)
+# Rofi configuration
+mkdir -p ~/.config/rofi
+cp .config/rofi/config.rasi ~/.config/rofi/
 
-### Kitty
+# Kitty configuration
+mkdir -p ~/.config/kitty
+cp .config/kitty/* ~/.config/kitty/
 
-- **Configuration**: [kitty.conf](.config/kitty/kitty.conf)
-- **Current Theme**: [current-theme.conf](.config/kitty/current-theme.conf)
+# Fish configuration
+mkdir -p ~/.config/fish
+cp -r .config/fish/* ~/.config/fish/
 
-### Fish
+# Fastfetch configuration
+mkdir -p ~/.config/fastfetch
+cp .config/fastfetch/config.jsonc ~/.config/fastfetch/
 
-- **Configuration**: [config.fish](.config/fish/config.fish)
-- **Plugins**: [fish_plugins](.config/fish/fish_plugins)
-- **Variables**: [fish_variables](.config/fish/fish_variables)
+# Nano configuration
+mkdir -p ~/.config/nano
+cp .config/nano/nanorc ~/.config/nano/
 
-### Fastfetch
+# QT5ct configuration
+mkdir -p ~/.config/qt5ct
+cp -r .config/qt5ct/* ~/.config/qt5ct/
 
-- **Configuration**: [config.jsonc](.config/fastfetch/config.jsonc)
+# QT6ct configuration
+mkdir -p ~/.config/qt6ct
+cp -r .config/qt6ct/* ~/.config/qt6ct/
 
-### Dunst
+# Systemd configuration
+sudo cp etc/systemd/logind.conf /etc/systemd/
 
-- **Configuration**: [dunstrc](.config/dunst/dunstrc)
+# /etc/ configuration
+sudo cp etc/ly/config.ini /etc/ly/
+sudo cp etc/systemd/logind.conf /etc/logind
 
-### Rofi
+# zsh configurations
+cp .zshrc ~/
 
-- **Configuration**: [config.rasi](.config/rofi/config.rasi)
-
-### Qt5ct and Qt6ct
-
-- **Qt5ct Config**: [qt5ct.conf](.config/qt5ct/qt5ct.conf)
-- **Qt6ct Config**: [qt6ct.conf](.config/qt6ct/qt6ct.conf)
-- **Qt5ct Theme**: [qt5ct.tera](.config/qt5ct/qt5ct.tera)
-- **Qt6ct Theme**: [qt6ct.tera](.config/qt6ct/qt6ct.tera)
-
-### Nano
-
-- **Configuration**: [nanorc](.config/nano/nanorc)
-
-### Systemd
-
-- **Logind**: [logind.conf](etc/systemd/logind.conf)
-
-### Ly
-
-- **Configuration**: [config.ini](etc/ly/config.ini)
-
-## Scripts
-
-- **Wallpaper Chooser**: [wallpaper_chooser.sh](script/wallpaper_chooser.sh)
-- **Screenshot**: [screenshot.sh](script/screenshot/screenshot.sh)
-- **Screenshot Region**: [region.sh](script/screenshot/region.sh)
-- **Active Window Screenshot**: [active_window.sh](script/screenshot/active_window.sh)
-
-## Aliases and Environment Variables
-
-### Bash
-
-- **Configuration**: [bashrc](.bashrc)
-
-### Zsh
-
-- **Configuration**: [zshrc](.zshrc)
-
-### Zprofile
-
-- **Configuration**: [zprofile](.zprofile)
+# Reload sway
+swaymsg reload
+```
 
 ## Screenshot
 
-![Screenshot](./img/2025-02-27_03-29-22.png)
+![Screenshot](./img/2025-03-08_15-27-48.png)
