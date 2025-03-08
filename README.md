@@ -19,6 +19,20 @@
 - jq
 - brightnessctl
 - pavucontrol
+- nwg-displays
+- nwg-look
+- eog
+- thunar
+- git
+- superfile
+- fzf
+- ly
+
+## How to clone
+
+```sh
+git clone --depth=1 https://github.com/w0pal/sway-config.git
+```
 
 ## Installations
 
