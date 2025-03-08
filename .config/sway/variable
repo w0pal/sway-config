@@ -32,7 +32,7 @@ set $menu rofi -show drun
 set $laptop eDP-1
 
 # Set Screenshots directory
-set $screenshots ~/.config/sway/script/screenshot/screenshot.sh
+set $screenshot ~/.config/sway/script/screenshot/screenshot.sh
 set $screenshot_region ~/.config/sway/script/screenshot/region.sh
 set $screenshot_window ~/.config/sway/script/screenshot/active_window.sh
 
