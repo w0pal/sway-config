@@ -35,6 +35,8 @@ alias xampp-stop="sudo /opt/lampp/xampp stop"
 alias bat=batcat
 alias fix_waybar='sudo killall waybar; swaymsg reload'
 alias sway-app='swaymsg -t get_tree | grep "app_id"'
+alias cleanpkg="sudo apt-get autoremove --purge $(deborphan --nice-mode)"
+
 
 # ZVM
 export ZVM_INSTALL="$HOME/.zvm/self"
