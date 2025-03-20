@@ -2,26 +2,81 @@
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+#export ZSH="$HOME/.oh-my-zsh"
 export EDITOR="nvim"
 
-plugins=(
-	git
-	zsh-autosuggestions
-  zsh-syntax-highlighting
-  docker
-  z
-  fzf
-  copypath
-)
+# Set the directory we want to store zinit and plugins
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-# Themes
-#ZSH_THEME="robbyrussell"
-source $ZSH/oh-my-zsh.sh
+# Download Zinit, if it's not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+   mkdir -p "$(dirname $ZINIT_HOME)"
+   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Cache eval statements to speed up initialization
+zinit light mafredri/zsh-async
+
+# Set Zsh options for performance
+# Optimize compinit execution
+# Skip global compinit if it's already run
+skip_global_compinit=1
+
+# Load compinit only if the dump file is older than a day
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(N.mh+1440) ]]; then
+  autoload -Uz compinit
+  compinit
+fi
+
+# Lazy load nvm to improve startup time
+zstyle ':omz:plugins:nvm' lazy yes
+zinit light ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/nvm
+
+# Load plugins with Turbo Mode
+zinit ice wait"0" lucid
+zinit light zdharma-continuum/fast-syntax-highlighting
+
+zinit ice wait"1" lucid
+zinit light zsh-users/zsh-completions
+
+zinit ice wait"2" lucid
+zinit light zsh-users/zsh-autosuggestions
+
+# Load snippets with Turbo Mode
+zinit ice wait"1" lucid
+zinit snippet OMZL::git.zsh
+
+zinit ice wait"3" lucid
+zinit snippet OMZP::nvm
+
+zinit ice wait"2" lucid
+zinit snippet OMZP::git
+
+# Lazy load nvm to improve startup time
+zstyle ':omz:plugins:nvm' lazy yes
+zinit light ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/nvm
+
+# Cache eval statements to speed up initialization
+zinit light mafredri/zsh-async
+
+# Load completions
+autoload -Uz compinit && compinit
+
+zinit cdreplay -q
 
 # Plugins
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+source <(fzf --zsh)
+
+# Load starship theme
+zinit ice as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh"
+zinit light starship/starship
+
 
 # History
 HISTSIZE=10000
@@ -34,6 +89,7 @@ setopt hist_ignore_space
 setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
+setopt inc_append_history    # Append history incrementally
 
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -59,16 +115,6 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-# Quick cd using fzf
-fcd() {
-  cd "$(find -type d | fzf --preview 'tree -C {} | head -200' --preview-window 'up:60%')"
-}
-
-# Find and edit using fzf
-fe() {
-  nvim "$(find -type f | fzf --preview 'cat {}' --preview-window 'up:60%')"
-}
-
 ssh_fzf() {
     local host=$(grep "Host " ~/.ssh/config | cut -d " " -f 2 | fzf)
     if [[ -n $host ]]; then
@@ -89,25 +135,14 @@ alias bat=batcat
 alias fix_waybar='sudo killall waybar; swaymsg reload'
 alias sway-app='swaymsg -t get_tree | grep "app_id"'
 alias cleanpkg="sudo apt-get autoremove --purge $(deborphan --nice-mode)"
-alias ff="fastfetch"
-alias apt="sudo apt"
+alias sway-conf="eval $EDITOR ~/.config/sway/config"
 
 # Power
 alias /sbin/shutdown -r now="reboot"
 alias /sbin/shutdown -h now="poweroff"
-
-# Networking
-alias nmconnect="nmcli device wifi connect"
-alias nmdown="nmcli c delete"
-alias nmlist="nmcli device wifi list"
-alias nmdelete="nmcli device delete"
 
 # ZVM
 export ZVM_INSTALL="$HOME/.zvm/self"
 export PATH="$PATH:$HOME/.zvm/bin"
 export PATH="$PATH:$ZVM_INSTALL"
 export NVM_DIR="$HOME/.nvm"
-
-# NVM
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
