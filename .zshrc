@@ -15,6 +15,10 @@ if [ ! -d "$ZINIT_HOME" ]; then
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
+# Plugins
+eval "$(zoxide init --cmd cd zsh)"
+source <(fzf --zsh)
+
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
@@ -61,10 +65,6 @@ bindkey -v
 autoload -Uz compinit && compinit
 
 zinit cdreplay -q
-
-# Plugins
-eval "$(zoxide init --cmd cd zsh)"
-source <(fzf --zsh)
 
 # Load starship theme
 zinit ice as"command" from"gh-r" \
