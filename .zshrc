@@ -5,6 +5,7 @@
 #export ZSH="$HOME/.oh-my-zsh"
 export EDITOR="nvim"
 
+
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
@@ -24,12 +25,6 @@ zinit light mafredri/zsh-async
 # Optimize compinit execution
 # Skip global compinit if it's already run
 skip_global_compinit=1
-
-# Load compinit only if the dump file is older than a day
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(N.mh+1440) ]]; then
-  autoload -Uz compinit
-  compinit
-fi
 
 # Lazy load nvm to improve startup time
 zstyle ':omz:plugins:nvm' lazy yes
@@ -55,12 +50,12 @@ zinit snippet OMZP::nvm
 zinit ice wait"2" lucid
 zinit snippet OMZP::git
 
-# Lazy load nvm to improve startup time
-zstyle ':omz:plugins:nvm' lazy yes
-zinit light ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/nvm
-
 # Cache eval statements to speed up initialization
 zinit light mafredri/zsh-async
+
+# Load zsh-vi-mode plugin
+zinit light jeffreytse/zsh-vi-mode
+bindkey -v
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -77,7 +72,6 @@ zinit ice as"command" from"gh-r" \
           atpull"%atclone" src"init.zsh"
 zinit light starship/starship
 
-
 # History
 HISTSIZE=10000
 HISTFILE=~/.zsh_history
@@ -91,10 +85,26 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt inc_append_history    # Append history incrementally
 
-# Completion styling
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
+# Use menu selection for completions
+zstyle ':completion:*' menu select
+
+# Group matches and describe them
+zstyle ':completion:*' group-name ''
+
+# List all matches
+zstyle ':completion:*' list-colors ''
+
+# Case-insensitive matching
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# Make ls command feels like oh-my-zsh
+bindkey -s '\el' 'ls\n'
+alias ll='ls -lh'
+alias la='ls -lha'
+alias l='ls -lF'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias grep='grep --color=auto'
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
