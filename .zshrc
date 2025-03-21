@@ -57,10 +57,6 @@ zinit snippet OMZP::git
 # Cache eval statements to speed up initialization
 zinit light mafredri/zsh-async
 
-# Load zsh-vi-mode plugin
-zinit light jeffreytse/zsh-vi-mode
-bindkey -v
-
 # Load completions
 autoload -Uz compinit && compinit
 
